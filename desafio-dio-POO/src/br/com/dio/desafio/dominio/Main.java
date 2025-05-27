@@ -9,7 +9,7 @@ public class Main {
        curso1.setTitulo("BootCamp");
         curso1.setDescricao("Curso 01");
         curso1.setCargaHoraria(20);
- 
+
 
 
         Curso cursoDelta = new Curso();
