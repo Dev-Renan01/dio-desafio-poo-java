@@ -1,9 +1,6 @@
 package br.com.dio.desafio.dominio;
 
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public class Dev {
     private String nome;
@@ -11,13 +8,23 @@ public class Dev {
     private Set <Conteudo> conteudosconcluidos = new LinkedHashSet<>();
 
     public void inscreverBootcamp(Bootcamp bootcamp){
-
+        this.conteudosInscritos.addAll(bootcamp.getConteudos());
+        bootcamp.getDevsInscritos().add(this);
     }
     public void progredir(){
+        Optional<Conteudo> conteudo = this.conteudosInscritos.stream().findFirst();
+            if(conteudo.isPresent()){
+                this.conteudosconcluidos.add(conteudo.get());
+                this.conteudosInscritos.remove(conteudo.get());
+            }else{
+                System.err.println("Você não está metriculado em nenhum conteúdo!");
+            }
 
     }
-    public void calcularXP(){
-
+    public double calcularXP(){
+        return this.conteudosconcluidos.stream()
+                .mapToDouble(conteudo -> conteudo.calcularXP())
+                .sum();
     }
 
     public String getNome() {
